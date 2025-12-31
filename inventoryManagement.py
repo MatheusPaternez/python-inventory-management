@@ -109,6 +109,50 @@ def addItem():
     }
     print(f"Product '{name}' saved.")
 
+
+def editItem():
+    print("Edit item".center(50, "%"))
+    name = input("Enter product name to edit: ").strip().lower()
+    if name not in inventory:
+        print("Product not found.")
+        return
+    item = inventory[name]
+    print(f"Current: Name: {item['name']} | Category: {item['category']} | Brand: {item['brand']} | Quantity: {item['quantity']} | Price: {item['price']}")
+    field = input("Which field to edit? (name/category/brand/quantity/price): ").strip().lower()
+    if field == "name":
+        new = input("Enter new name: ").strip()
+        if not new:
+            print("Name cannot be empty.")
+            return
+        del inventory[name]
+        # Create a new name with ** (copy)
+        inventory[new.lower()] = {**item, "name": new}
+        print("Name updated.")
+    elif field == "category":
+        new = input("Enter new category: ").strip().lower()
+        inventory[name]['category'] = new
+        print("Category updated.")
+    elif field == "brand":
+        new = input("Enter new brand: ").strip()
+        inventory[name]['brand'] = new
+        print("Brand updated.")
+    elif field == "quantity":
+        new = input("Enter new quantity: ").strip()
+        try:
+            inventory[name]['quantity'] = int(new)
+            print("Quantity updated.")
+        except:
+            print("Invalid quantity.")
+    elif field == "price":
+        new = input("Enter new price: ").strip()
+        try:
+            inventory[name]['price'] = round(float(new), 2)
+            print("Price updated.")
+        except:
+            print("Invalid price.")
+    else:
+        print("Unknown field.")
+
 while selectedOption != 5:
     print("Welcome to the Inventory Management System!")
     print("===========================================")
@@ -121,5 +165,7 @@ while selectedOption != 5:
         addItem()
     elif selectedOption == 2:
         showAll(inventory)
+    elif selectedOption == 3:
+        editItem()
     elif selectedOption == 5:
         print("End of executing.")
