@@ -15,8 +15,13 @@ def showAll(items):
             print(f"{i}. {it}")
 
 
+def ask_yes_no(prompt):
+    resp = input(prompt).strip().lower()
+    return resp in ("y", "yes")
+
+
 def addItem():
-    print("Add item".center(50,"%"))
+    print(" Add item ".center(50,"%"))
     # Getting product name
     name = input("Enter product name: ").strip()
     if not name:
@@ -111,7 +116,7 @@ def addItem():
 
 
 def editItem():
-    print("Edit item".center(50, "%"))
+    print(" Edit item ".center(50, "%"))
     name = input("Enter product name to edit: ").strip().lower()
     if name not in inventory:
         print("Product not found.")
@@ -153,6 +158,19 @@ def editItem():
     else:
         print("Unknown field.")
 
+
+def removeItem():
+    print("Remove item".center(50, "%"))
+    name = input("Enter product name to remove: ").strip().lower()
+    if not name:
+        print("Name cannot be empty.")
+        return
+    if name in inventory:
+        del inventory[name]
+        print("Product removed.")
+    else:
+        print("Product not found.")
+
 while selectedOption != 5:
     print("Welcome to the Inventory Management System!")
     print("===========================================")
@@ -167,5 +185,7 @@ while selectedOption != 5:
         showAll(inventory)
     elif selectedOption == 3:
         editItem()
+    elif selectedOption == 4:
+        removeItem()
     elif selectedOption == 5:
         print("End of executing.")
