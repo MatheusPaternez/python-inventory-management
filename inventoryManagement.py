@@ -4,16 +4,15 @@ inventory = dict()
 selectedOption = 0
 
 def showAll(items):
-    for item in items:
-        print(item)
-def ask_yes_no(prompt: str):
-    while True:
-        answer = input(prompt).strip().lower()
-        if answer in ("y", "yes"):
-            return True
-        if answer in ("n", "no"):
-            return False
-        print("Please enter 'y' or 'n'.")
+    # check if it is dict
+    if isinstance(items, dict):
+        print("Inventory:")
+        for key, val in items.items():
+            print(f"- {val.get('name', key)}")
+            print(f"  Category: {val.get('category')}, Brand: {val.get('brand')}, Quantity: {val.get('quantity')}, Price: {val.get('price')}")
+    else:
+        for i, it in enumerate(items, 1):
+            print(f"{i}. {it}")
 
 
 def addItem():
@@ -120,3 +119,7 @@ while selectedOption != 5:
         continue
     if selectedOption == 1:
         addItem()
+    elif selectedOption == 2:
+        showAll(inventory)
+    elif selectedOption == 5:
+        print("End of executing.")
